@@ -1,16 +1,19 @@
 package com.pureandcold.aggregator.services.handlers;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.pureandcold.aggregator.constants.FeatureConstants;
+import com.pureandcold.aggregator.model.internal.responses.Banner;
 import com.pureandcold.aggregator.model.internal.responses.FooterResponse;
 import com.pureandcold.aggregator.model.internal.responses.HeaderResponse;
 import com.pureandcold.aggregator.model.internal.responses.HelpCenter;
 import com.pureandcold.aggregator.model.internal.responses.NavigationItem;
 import com.pureandcold.aggregator.model.internal.responses.SocialMedia;
-import com.pureandcold.constants.FeatureConstants;
+import com.pureandcold.aggregator.model.internal.responses.WidgetsResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,5 +46,12 @@ public class HomePageDefaultHandler {
                     SocialMedia.builder().name("Instagram").url("insta_url").build(),
                     SocialMedia.builder().name("Twitter").url("x_url").build()
                 )).build();
+    }
+
+    public WidgetsResponse getWidgetsResponse() {
+        return WidgetsResponse.builder()
+        .banners(List.of(
+            Banner.builder().altText("BANNER_ALT_TEXT").imageUrl("BANNER_URL").build()
+        )).build();
     }
 }

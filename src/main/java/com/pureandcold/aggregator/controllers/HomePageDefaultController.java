@@ -6,17 +6,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pureandcold.aggregator.constants.HttpConstants.DefaultController;
 import com.pureandcold.aggregator.model.internal.responses.FooterResponse;
 import com.pureandcold.aggregator.model.internal.responses.HeaderResponse;
+import com.pureandcold.aggregator.model.internal.responses.WidgetsResponse;
 import com.pureandcold.aggregator.services.handlers.HomePageDefaultHandler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
 @Slf4j
-@RequestMapping("1.0/api/home")
+@RequestMapping(DefaultController.BASE_PATH)
 public class HomePageDefaultController {
 
     private final HomePageDefaultHandler homePageDefaultHandler;
@@ -25,7 +29,7 @@ public class HomePageDefaultController {
         this.homePageDefaultHandler = homePageDefaultHandler;
     }
 
-    @GetMapping("/header")
+    @GetMapping(DefaultController.HEADER_API_PATH)
     public ResponseEntity<HeaderResponse> getHeader() {
         HeaderResponse response = null;
         try {
@@ -33,12 +37,12 @@ public class HomePageDefaultController {
         } catch (Exception e) {
             // TODO :: check why error not working
             // log.error( "Exception Occurred while getting default header. Stack trace : {}", e.printStackTrace());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/footer")
+    @GetMapping(DefaultController.FOOTER_API_PATH)
     public ResponseEntity<FooterResponse> getFooter() {
         FooterResponse response = null;
         try {
@@ -46,9 +50,21 @@ public class HomePageDefaultController {
         } catch (Exception e) {
             // TODO :: check why error not working
             // log.error( "Exception Occurred while getting default header. Stack trace : {}", e.printStackTrace());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
     }
-    
+
+    @GetMapping(DefaultController.WIDGETS_API_PATH)
+    public ResponseEntity<WidgetsResponse> getWidgetsResponse(@RequestParam String param) {
+        WidgetsResponse response = null;
+        try {
+            response = homePageDefaultHandler.getWidgetsResponse();
+        } catch (Exception e) {
+            // TODO :: check why error not working
+            // log.error( "Exception Occurred while getting default header. Stack trace : {}", e.printStackTrace());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
+    }
 }
