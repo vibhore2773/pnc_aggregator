@@ -41,6 +41,7 @@ public class HttpConstants {
     public static class UserOrderController {
         public static final String BASE_PATH = "1.0/api";
         public static final String USER_REGISTRATION_PATH = "/user/register";
+        public static final String VERIFY_OPT_PATH = "/user/verify-otp";
     }
 
 
@@ -56,5 +57,6 @@ public class HttpConstants {
     public static class UserOrderService {
         public static final String USER_ORDER_BASE_URL = "${user_order_base_url}";
         public static final String USER_REGISTRATION_API_PATH = "1.0/api/user/register";
+        public static final String VERIFY_OTP_API_PATH = "1.0/api/user/verifyOtp";
     }
 }
