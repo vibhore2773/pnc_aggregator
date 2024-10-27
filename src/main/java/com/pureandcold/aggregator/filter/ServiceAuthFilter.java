@@ -45,11 +45,12 @@ public class ServiceAuthFilter implements Filter{
             MDC.put(HttpConstants.HeaderConstants.COUNTRY_CODE, countryCode);
             String requestClientId = httpServletRequest.getHeader(HttpConstants.HeaderConstants.CLIENT_ID);
             String requestClientSecret = httpServletRequest.getHeader(HttpConstants.HeaderConstants.CLIENT_SECRET);
-
-            if (clientId.equals(requestClientId) && clientSecret.equals(requestClientSecret)) {
-                filterChain.doFilter(httpServletRequest, httpServletResponse);
-            } else {
-                    httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            if (HttpConstants.ADMIN_API_PATHS.contains(uri)) {
+                if (clientId.equals(requestClientId) && clientSecret.equals(requestClientSecret)) {
+                    filterChain.doFilter(httpServletRequest, httpServletResponse);
+                } else {
+                        httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                }
             }
         }
     }

@@ -11,4 +11,9 @@ public class RestTemplateConfig {
     public RestTemplate getInventoryRestTemplate() {
         return new RestTemplate();
     }
+
+    @Bean("userOrderServiceRestTemplate")
+    public RestTemplate getUserOrderServiceRestTemplate() {
+        return new RestTemplate();
+    }
 }

@@ -1,16 +1,17 @@
 package com.pureandcold.aggregator.controllers;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pureandcold.aggregator.constants.HttpConstants.DefaultController;
+import com.pureandcold.aggregator.model.internal.requests.FetchProductRequest;
+import com.pureandcold.aggregator.model.internal.responses.FetchProductResponseView;
 import com.pureandcold.aggregator.model.internal.responses.FooterResponse;
 import com.pureandcold.aggregator.model.internal.responses.HeaderResponse;
 import com.pureandcold.aggregator.model.internal.responses.WidgetsResponse;
-import com.pureandcold.aggregator.services.handlers.HomePageDefaultHandler;
+import com.pureandcold.aggregator.services.handlers.HomePageAndInfoDefaultHandler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(DefaultController.BASE_PATH)
 public class HomePageDefaultController {
 
-    private final HomePageDefaultHandler homePageDefaultHandler;
+    private final HomePageAndInfoDefaultHandler homePageDefaultHandler;
 
-    HomePageDefaultController(HomePageDefaultHandler homePageDefaultHandler) {
+    HomePageDefaultController(HomePageAndInfoDefaultHandler homePageDefaultHandler) {
         this.homePageDefaultHandler = homePageDefaultHandler;
     }
 
@@ -66,5 +67,19 @@ public class HomePageDefaultController {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping(DefaultController.GET_PRODUCTS_PATH)
+    public ResponseEntity<FetchProductResponseView> getProducts(@RequestParam(name = "type", required = true) String type) {
+        FetchProductRequest request = FetchProductRequest.builder().type(type).build();
+        FetchProductResponseView response = null;
+        try {
+            response = homePageDefaultHandler.getProductsByType(request);
+        } catch (Exception e) {
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 }
