@@ -4,12 +4,17 @@ import static com.pureandcold.aggregator.constants.HttpConstants.InfoController.
 import static com.pureandcold.aggregator.constants.HttpConstants.InfoController.BASE_PATH;
 import static com.pureandcold.aggregator.constants.HttpConstants.InfoController.CONTACT_US_PATH;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pureandcold.aggregator.model.internal.responses.InfoResponse;
 import com.pureandcold.aggregator.services.handlers.HomePageAndInfoDefaultHandler;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,21 +22,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping(BASE_PATH)
+@Slf4j
 public class InfoController {
 
     private final HomePageAndInfoDefaultHandler homePageAndInfoDefaultHandler;
     InfoController(HomePageAndInfoDefaultHandler homePageAndInfoDefaultHandler) {
         this.homePageAndInfoDefaultHandler = homePageAndInfoDefaultHandler;
     }
-    
+
     @GetMapping(ABOUT_US_PATH)
-    public String getMethodName(@RequestParam String param) {
-        return new String();
-    }
-    
     public ResponseEntity<InfoResponse> getAboutUsInfo() {
         InfoResponse response = null;
         try {
+            log.info("log 1");
             response = homePageAndInfoDefaultHandler.getAboutUsInfo();
         } catch (Exception e) {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);

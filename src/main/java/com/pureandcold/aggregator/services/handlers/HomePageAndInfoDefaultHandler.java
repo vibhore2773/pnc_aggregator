@@ -70,7 +70,7 @@ public class HomePageAndInfoDefaultHandler {
     }
 
     public FetchProductResponseView getProductsByType(FetchProductRequest request) {
-        if (!FetchProductRequestTypeEnum.BEST_SELLER.getName().equals(request.getType())) {
+        if (!FetchProductRequestTypeEnum.BEST_SELLER.getType().equalsIgnoreCase(request.getType())) {
             return FetchProductResponseView.builder().build();
         }
         FetchProductResponseView invenFetchProductResponseView = inventoryHandler.getProductsByType(request);
@@ -82,7 +82,7 @@ public class HomePageAndInfoDefaultHandler {
                               .aboutUs(Info.builder()
                                               .titleText("ABOUT US")
                                               .imageUrl(pncLogoUrl)
-                                              .bodyTexts(new ArrayList<>())
+                                              .bodyTexts(Arrays.asList("body 1", "body 2"))
                                               .build())
                               .build();
     }

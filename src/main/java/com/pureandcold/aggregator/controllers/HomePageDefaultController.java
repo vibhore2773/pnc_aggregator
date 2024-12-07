@@ -2,8 +2,7 @@ package com.pureandcold.aggregator.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.pureandcold.aggregator.constants.HttpConstants.DefaultController;
 import com.pureandcold.aggregator.model.internal.requests.FetchProductRequest;
@@ -14,9 +13,6 @@ import com.pureandcold.aggregator.model.internal.responses.WidgetsResponse;
 import com.pureandcold.aggregator.services.handlers.HomePageAndInfoDefaultHandler;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 
 @RestController
@@ -30,10 +26,11 @@ public class HomePageDefaultController {
         this.homePageDefaultHandler = homePageDefaultHandler;
     }
 
-    @GetMapping(DefaultController.HEADER_API_PATH)
+    @RequestMapping(value = DefaultController.HEADER_API_PATH, method = RequestMethod.GET)
     public ResponseEntity<HeaderResponse> getHeader() {
         HeaderResponse response = null;
         try {
+            log.info("log 2");
             response = homePageDefaultHandler.getHeaderResponse();
         } catch (Exception e) {
             // TODO :: check why error not working
@@ -57,7 +54,7 @@ public class HomePageDefaultController {
     }
 
     @GetMapping(DefaultController.WIDGETS_API_PATH)
-    public ResponseEntity<WidgetsResponse> getWidgetsResponse(@RequestParam String param) {
+    public ResponseEntity<WidgetsResponse> getWidgetsResponse() {
         WidgetsResponse response = null;
         try {
             response = homePageDefaultHandler.getWidgetsResponse();
@@ -78,8 +75,6 @@ public class HomePageDefaultController {
         } catch (Exception e) {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 }

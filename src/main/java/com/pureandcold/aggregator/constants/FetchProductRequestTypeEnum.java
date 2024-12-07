@@ -7,11 +7,11 @@ public enum FetchProductRequestTypeEnum {
     BEST_SELLER("bestseller"),
     ALL("all");
 
-    private String name;
-    FetchProductRequestTypeEnum(String name) {
-        this.name = name();
+    private String type;
+    FetchProductRequestTypeEnum(String type) {
+        this.type = type;
     }
     public String getName() {
-        return this.name;
+        return this.type;
     }
 }

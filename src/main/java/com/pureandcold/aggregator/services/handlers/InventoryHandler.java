@@ -20,7 +20,7 @@ public class InventoryHandler {
         this.inventoryService = inventoryService;
     }
 
-    public FetchProductResponseView  getProductsByType(FetchProductRequest request) {
+    public FetchProductResponseView getProductsByType(FetchProductRequest request) {
         FetchProductResponse inventoryFetchProductResponse = inventoryService.getFetchProductResponse(InventoryAdapter.getInventoryRequest(request));
         return InventoryAdapter.getFetchProductResponseViewFromInventoryFetchProductResponse(inventoryFetchProductResponse);
     }
