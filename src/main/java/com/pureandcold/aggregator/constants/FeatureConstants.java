@@ -1,4 +1,4 @@
-package com.pureandcold.constants;
+package com.pureandcold.aggregator.constants;
 
 import lombok.experimental.UtilityClass;
 

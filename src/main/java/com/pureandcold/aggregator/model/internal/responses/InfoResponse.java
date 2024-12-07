@@ -9,8 +9,7 @@ import lombok.Data;
 @Data
 @Builder
 @JsonNaming(SnakeCaseStrategy.class)
-public class Banner {
-    private String imageUrl;
-    private String altText;
-    private String redirecterUrl;
+public class InfoResponse {
+
+    private Info aboutUs;
 }
