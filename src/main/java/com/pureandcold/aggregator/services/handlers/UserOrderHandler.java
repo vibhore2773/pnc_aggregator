@@ -60,4 +60,12 @@ private void validateVerifyOtpRequest(VerifyOtpRequest request) throws BadReques
         throw new BadRequestException("Invalid Request");
     }
 }
+
+    public String loginUser(String userRequest) {
+        validateLoginRequest(userRequest);
+        return userOrderService.login(userRequest);
+    }
+
+    private void validateLoginRequest(String userRequest) {
+    }
 }

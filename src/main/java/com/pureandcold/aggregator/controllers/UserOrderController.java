@@ -56,5 +56,14 @@ public class UserOrderController {
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    
+
+    public ResponseEntity<String> login(@RequestBody String userRequest) {
+        String response = null;
+        try {
+            response = userOrderHandler.loginUser(userRequest);
+        } catch (Exception e) {
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
