@@ -73,8 +73,7 @@ public class HomePageAndInfoDefaultHandler {
         if (!FetchProductRequestTypeEnum.BEST_SELLER.getType().equalsIgnoreCase(request.getType())) {
             return FetchProductResponseView.builder().build();
         }
-        FetchProductResponseView invenFetchProductResponseView = inventoryHandler.getProductsByType(request);
-        return invenFetchProductResponseView;
+        return inventoryHandler.getProductsByType(request);
     }
 
     public InfoResponse getAboutUsInfo() {

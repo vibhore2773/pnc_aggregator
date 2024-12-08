@@ -37,7 +37,7 @@ public class HomePageDefaultController {
             // log.error( "Exception Occurred while getting default header. Stack trace : {}", e.printStackTrace());
             return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
     @GetMapping(DefaultController.FOOTER_API_PATH)
@@ -50,7 +50,7 @@ public class HomePageDefaultController {
             // log.error( "Exception Occurred while getting default header. Stack trace : {}", e.printStackTrace());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
     @GetMapping(DefaultController.WIDGETS_API_PATH)
@@ -63,7 +63,7 @@ public class HomePageDefaultController {
             // log.error( "Exception Occurred while getting default header. Stack trace : {}", e.printStackTrace());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
     @GetMapping(DefaultController.GET_PRODUCTS_PATH)
@@ -75,6 +75,6 @@ public class HomePageDefaultController {
         } catch (Exception e) {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

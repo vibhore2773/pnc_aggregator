@@ -44,9 +44,6 @@ public class HttpConstants {
         public static final String VERIFY_OPT_PATH = "/user/verify-otp";
     }
 
-
-public static final Set <String> UNAUTHENTICATED_API_PATHS = Set.of(BaseController.BASE_PATH.concat(BaseController.HEALTH_CHECK_PATH));
-
     public static final Set <String> ADMIN_API_PATHS = Set.of(InventoryController.BASE_PATH.concat(InventoryController.GET_PRODUCTS_PATH));
 
     public static class InventoryService {

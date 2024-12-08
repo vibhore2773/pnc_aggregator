@@ -1,6 +1,7 @@
 package com.pureandcold.aggregator.filter;
 
 import java.io.IOException;
+import java.util.Set;
 
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class ServiceAuthFilter implements Filter{
+public class ServiceAuthFilter implements Filter {
     
     @Value("${client_id}")
     private String clientId;
@@ -37,23 +38,19 @@ public class ServiceAuthFilter implements Filter{
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 
         String uri = httpServletRequest.getRequestURI();
-        boolean skipAuth = StringUtils.hasLength(uri) && HttpConstants.UNAUTHENTICATED_API_PATHS.contains(uri);
-        if (skipAuth) {
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
-        } else {
-            String countryCode = httpServletRequest.getHeader(HttpConstants.HeaderConstants.COUNTRY_CODE);
-            MDC.put(HttpConstants.HeaderConstants.COUNTRY_CODE, countryCode);
+        boolean doAuth = StringUtils.hasLength(uri) && HttpConstants.ADMIN_API_PATHS.contains(uri);
+        String countryCode = httpServletRequest.getHeader(HttpConstants.HeaderConstants.COUNTRY_CODE);
+        MDC.put(HttpConstants.HeaderConstants.COUNTRY_CODE, countryCode);
+        if (doAuth) {
             String requestClientId = httpServletRequest.getHeader(HttpConstants.HeaderConstants.CLIENT_ID);
             String requestClientSecret = httpServletRequest.getHeader(HttpConstants.HeaderConstants.CLIENT_SECRET);
-            if (!HttpConstants.ADMIN_API_PATHS.contains(uri)) {
-                if (clientId.equals(requestClientId) && clientSecret.equals(requestClientSecret)) {
-                    filterChain.doFilter(httpServletRequest, httpServletResponse);
-                } else {
-                        httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                }
-            } else {
+            if (clientId.equals(requestClientId) && clientSecret.equals(requestClientSecret)) {
                 filterChain.doFilter(httpServletRequest, httpServletResponse);
+            } else {
+                httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
+        } else {
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
         }
     }
 }
