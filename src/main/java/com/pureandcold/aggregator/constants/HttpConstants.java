@@ -42,6 +42,10 @@ public class HttpConstants {
         public static final String BASE_PATH = "/1.0/api";
         public static final String USER_REGISTRATION_PATH = "/user/register";
         public static final String VERIFY_OPT_PATH = "/user/verify-otp";
+        public static final String RESEND_OTP_PATH = "/user/resend-otp";
+        public static final String LOGIN_PATH = "user/login";
+        public static final String FORGET_PASSWORD_PATH = "user/forget-password";
+        public static final String RESET_PASSWORD_PATH = "user/reset-password";
     }
 
     public static final Set <String> ADMIN_API_PATHS = Set.of(InventoryController.BASE_PATH.concat(InventoryController.GET_PRODUCTS_PATH));
@@ -56,5 +60,8 @@ public class HttpConstants {
         public static final String USER_REGISTRATION_API_PATH = "1.0/api/user/register";
         public static final String VERIFY_OTP_API_PATH = "1.0/api/user/verifyOtp";
         public static final String USER_LOGIN_API_PATH = "1.0/api/user/login";
+        public static final String RESEND_OTP_API_PATH = "1.0/api/user/resend-otp";
+        public static final String FORGET_PASSWORD_API_PATH = "1.0/api/user/forget-password";
+        public static final String RESET_PASSWORD_API_PATH = "1.0/api/user/reset-password";
     }
 }

@@ -1,6 +1,14 @@
 package com.pureandcold.aggregator.services.external;
 
+import com.fasterxml.jackson.databind.util.ExceptionUtil;
+import com.pureandcold.aggregator.model.internal.requests.ForgetPasswordRequest;
+import com.pureandcold.aggregator.model.internal.requests.ResendOtpRequest;
+import com.pureandcold.aggregator.model.internal.requests.UserLoginRequest;
+import com.pureandcold.aggregator.model.internal.responses.ForgetPasswordResponse;
+import com.pureandcold.aggregator.model.internal.responses.ResendOtpResponse;
+import com.pureandcold.aggregator.model.internal.responses.UserLoginResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -13,7 +21,6 @@ import com.pureandcold.aggregator.model.external.requests.UserRegistrationReques
 import com.pureandcold.aggregator.model.external.requests.VerifyOtpRequest;
 import com.pureandcold.aggregator.model.external.responses.UserRegistrationResponse;
 import com.pureandcold.aggregator.model.external.responses.VerifyOtpResponse;
-
 import static com.pureandcold.aggregator.constants.HttpConstants.UserOrderService.*;
 
 @Component
@@ -44,8 +51,7 @@ public class UserOrderService {
                 return responseEntity.getBody();
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            // Optionally, you could log the error or throw a custom exception
+
         }
         return new UserRegistrationResponse(false, "Registration failed"); 
     }
@@ -64,29 +70,62 @@ public class UserOrderService {
                 return responseEntity.getBody();
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            // Optionally, you could log the error or throw a custom exception
+            log.error("Exception Occurred While Verifying User. Stacktrace : {}", ExceptionUtils.getStackTrace(e));
         }
         return new VerifyOtpResponse(false, "Registration failed"); 
     }
 
-    public String login(String userRequest) {
+    public UserLoginResponse login(UserLoginRequest userRequest) {
         String uri = userOrderBaseUrl.concat(USER_LOGIN_API_PATH);
         try {
-            HttpEntity<String> requestEntity = new HttpEntity<>(userRequest);
-
-            ResponseEntity<String> responseEntity = restTemplate.exchange(
+            HttpEntity<UserLoginRequest> requestEntity = new HttpEntity<>(userRequest);
+            ResponseEntity<UserLoginResponse> responseEntity = restTemplate.exchange(
                     uri,
                     HttpMethod.POST,
                     requestEntity,
-                    String.class);
+                    UserLoginResponse.class);
             if (responseEntity.getStatusCode().is2xxSuccessful()) {
                 return responseEntity.getBody();
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            // Optionally, you could log the error or throw a custom exception
+            log.error("Exception Occurred While Trying User Login. Stacktrace : {}", ExceptionUtils.getStackTrace(e));
         }
-        return "Login failed";
+        return new UserLoginResponse(false,"Login Failed", null);
+    }
+
+    public ResendOtpResponse resendOtp(ResendOtpRequest resendOtpRequest) {
+        String uri = userOrderBaseUrl.concat(RESEND_OTP_API_PATH);
+        try {
+            HttpEntity<ResendOtpRequest> requestEntity = new HttpEntity<>(resendOtpRequest);
+            ResponseEntity<ResendOtpResponse> responseEntity = restTemplate.exchange(
+                    uri,
+                    HttpMethod.POST,
+                    requestEntity,
+                    ResendOtpResponse.class);
+            if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                return responseEntity.getBody();
+            }
+        } catch (Exception e) {
+            log.error("Exception Occurred While Trying To Resend Otp. Stacktrace : {}", ExceptionUtils.getStackTrace(e));
+        }
+        return new ResendOtpResponse(false,"Resend Otp Failed");
+    }
+
+    public ForgetPasswordResponse forgetPassword(ForgetPasswordRequest forgetPasswordRequest) {
+        String uri = userOrderBaseUrl.concat(FORGET_PASSWORD_API_PATH);
+        try {
+            HttpEntity<ForgetPasswordRequest> requestEntity = new HttpEntity<>(forgetPasswordRequest);
+            ResponseEntity<ForgetPasswordResponse> responseEntity = restTemplate.exchange(
+                    uri,
+                    HttpMethod.POST,
+                    requestEntity,
+                    ForgetPasswordResponse.class);
+            if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                return responseEntity.getBody();
+            }
+        } catch (Exception e) {
+            log.error("Exception Occurred While Trying To Create Forget Password Request. Stacktrace : {}", ExceptionUtils.getStackTrace(e));
+        }
+        return new ForgetPasswordResponse(false,"Forget Password Request Failed");
     }
 }

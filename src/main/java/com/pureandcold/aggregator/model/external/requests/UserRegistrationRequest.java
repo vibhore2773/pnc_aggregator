@@ -17,4 +17,6 @@ public class UserRegistrationRequest {
     private String phoneNumber;
     private String password;
     private String confirmPassword;
+    private String flowType;
+    private String countryCode;
 }
