@@ -13,4 +13,5 @@ public class VerifyOtpRequest {
     private String email;
     private String phoneNumber;
     private String otp;
+    private String transactionId;
 }

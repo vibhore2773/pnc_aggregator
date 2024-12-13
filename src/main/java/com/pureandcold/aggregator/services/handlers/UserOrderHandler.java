@@ -2,19 +2,18 @@ package com.pureandcold.aggregator.services.handlers;
 
 import java.util.Objects;
 
-import org.springframework.http.HttpStatus;
+import com.pureandcold.aggregator.model.external.requests.ForgetPasswordRequest;
+import com.pureandcold.aggregator.model.external.requests.ResendOtpRequest;
+import com.pureandcold.aggregator.model.external.requests.ResetPasswordRequest;
+import com.pureandcold.aggregator.model.external.requests.UserLoginRequest;
+import com.pureandcold.aggregator.model.external.responses.*;
+import com.pureandcold.aggregator.model.internal.responses.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.client.HttpClientErrorException.BadRequest;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.pureandcold.aggregator.exceptions.BadRequestException;
-import com.pureandcold.aggregator.model.external.responses.UserRegistrationResponse;
-import com.pureandcold.aggregator.model.external.responses.VerifyOtpResponse;
 import com.pureandcold.aggregator.model.internal.requests.UserRegistrationRequest;
 import com.pureandcold.aggregator.model.internal.requests.VerifyOtpRequest;
-import com.pureandcold.aggregator.model.internal.responses.UserRegistrationResponseView;
-import com.pureandcold.aggregator.model.internal.responses.VerifyOtpResponseView;
 import com.pureandcold.aggregator.services.adapters.UserOrderServiceAdapter;
 import com.pureandcold.aggregator.services.external.UserOrderService;
 
@@ -29,9 +28,7 @@ public class UserOrderHandler {
 
     public UserRegistrationResponseView getUserRegistrationResponse (UserRegistrationRequest userRegistrationRequest) throws BadRequestException {
         validate(userRegistrationRequest);
-        
         UserRegistrationResponse userRegistrationResponse = userOrderService.registerUser(UserOrderServiceAdapter.getUserRegistrationServiceRequest(userRegistrationRequest));
-
         return UserOrderServiceAdapter.getResponseViewFromResponse(userRegistrationResponse);
     }
 
@@ -60,4 +57,54 @@ private void validateVerifyOtpRequest(VerifyOtpRequest request) throws BadReques
         throw new BadRequestException("Invalid Request");
     }
 }
+
+    public UserLoginResponseView loginUser(UserLoginRequest userRequest) throws BadRequestException {
+        validateLoginRequest(userRequest);
+        UserLoginResponse userLoginResponse = userOrderService.login(UserOrderServiceAdapter.getUserLoginRequest(userRequest));
+        return UserOrderServiceAdapter.getUserLoginResponseView(userLoginResponse);
+    }
+
+    private void validateLoginRequest(UserLoginRequest userRequest) throws BadRequestException{
+        if (!StringUtils.hasLength(userRequest.getUsername()) &&
+        !StringUtils.hasLength(userRequest.getPassword())) {
+            throw new BadRequestException("Username or Password cannot be null");
+        }
+    }
+
+    public ResendOtpResponseView resendOtp(ResendOtpRequest resendOtpRequest) throws BadRequestException {
+        validateResendOtpRequest(resendOtpRequest);
+        ResendOtpResponse resendOtpResponse = userOrderService.resendOtp(UserOrderServiceAdapter.getResendOtpRequest(resendOtpRequest));
+        return UserOrderServiceAdapter.getResendOtpResponseView(resendOtpResponse);
+    }
+
+    private void validateResendOtpRequest(ResendOtpRequest resendOtpRequest) throws BadRequestException {
+        if (!StringUtils.hasLength(resendOtpRequest.getEmail()) && !StringUtils.hasLength(resendOtpRequest.getPhoneNumber())) {
+            throw new BadRequestException("Both Email & PhoneNumber Can't Be Null");
+        }
+    }
+
+    public ForgetPasswordResponseView forgetPassword(ForgetPasswordRequest request) throws BadRequestException {
+        validateForgetPasswordRequest(request);
+        ForgetPasswordResponse forgetPasswordResponse = userOrderService.forgetPassword(UserOrderServiceAdapter.getForgetPasswordRequest(request));
+        return UserOrderServiceAdapter.getForgetPasswordResponseView(forgetPasswordResponse);
+    }
+
+    private void validateForgetPasswordRequest(ForgetPasswordRequest request) throws BadRequestException {
+        if (!StringUtils.hasLength(request.getEmail()) && !StringUtils.hasLength(request.getPhoneNumber())) {
+            throw new BadRequestException("Both Email & PhoneNumber Can't Be Null");
+        }
+    }
+
+    public ResetPasswordResponseView resetPassword(ResetPasswordRequest request) throws BadRequestException {
+        validateResetPasswordRequest(request);
+        ResetPasswordResponse resetPasswordResponse = userOrderService.resetPassword(UserOrderServiceAdapter.getResetPasswordRequest(request));
+        return UserOrderServiceAdapter.getResetPasswordResponseView(resetPasswordResponse);
+    }
+
+    private void validateResetPasswordRequest(ResetPasswordRequest request) throws BadRequestException {
+        if (!StringUtils.hasLength(request.getOtp()) || !StringUtils.hasLength(request.getUsername()) ||
+            !StringUtils.hasLength(request.getNewPassword()) || !StringUtils.hasLength(request.getConfirmNewPassword())) {
+            throw new BadRequestException("Invalid Reset Password Request");
+        }
+    }
 }
