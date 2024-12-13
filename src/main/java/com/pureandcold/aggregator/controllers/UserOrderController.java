@@ -2,9 +2,11 @@ package com.pureandcold.aggregator.controllers;
 
 import com.pureandcold.aggregator.model.external.requests.ForgetPasswordRequest;
 import com.pureandcold.aggregator.model.external.requests.ResendOtpRequest;
+import com.pureandcold.aggregator.model.external.requests.ResetPasswordRequest;
 import com.pureandcold.aggregator.model.external.requests.UserLoginRequest;
 import com.pureandcold.aggregator.model.external.responses.ForgetPasswordResponseView;
 import com.pureandcold.aggregator.model.external.responses.ResendOtpResponseView;
+import com.pureandcold.aggregator.model.external.responses.ResetPasswordResponseView;
 import com.pureandcold.aggregator.model.external.responses.UserLoginResponseView;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -94,8 +96,13 @@ public class UserOrderController {
     }
 
     @PostMapping(RESET_PASSWORD_PATH)
-    public ResponseEntity<response_reset_pwd> resetPWD(@RequestBody request_reset_pwd request) {
-        final response_reset_pwd resend = resetpasswordservice.ResetPassword(request);
-        return new ResponseEntity<>(resend, HttpStatus.OK);
+    public ResponseEntity<ResetPasswordResponseView> resetPassword(@RequestBody ResetPasswordRequest request) {
+        ResetPasswordResponseView response = null;
+        try {
+            response = userOrderHandler.resetPassword(request);
+        } catch (Exception e) {
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

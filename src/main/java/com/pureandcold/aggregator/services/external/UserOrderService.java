@@ -1,11 +1,13 @@
 package com.pureandcold.aggregator.services.external;
 
 import com.fasterxml.jackson.databind.util.ExceptionUtil;
+import com.pureandcold.aggregator.model.internal.requests.ResetPasswordRequest;
 import com.pureandcold.aggregator.model.internal.requests.ForgetPasswordRequest;
 import com.pureandcold.aggregator.model.internal.requests.ResendOtpRequest;
 import com.pureandcold.aggregator.model.internal.requests.UserLoginRequest;
 import com.pureandcold.aggregator.model.internal.responses.ForgetPasswordResponse;
 import com.pureandcold.aggregator.model.internal.responses.ResendOtpResponse;
+import com.pureandcold.aggregator.model.internal.responses.ResetPasswordResponse;
 import com.pureandcold.aggregator.model.internal.responses.UserLoginResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -127,5 +129,23 @@ public class UserOrderService {
             log.error("Exception Occurred While Trying To Create Forget Password Request. Stacktrace : {}", ExceptionUtils.getStackTrace(e));
         }
         return new ForgetPasswordResponse(false,"Forget Password Request Failed");
+    }
+
+    public ResetPasswordResponse resetPassword(ResetPasswordRequest resetPasswordRequest) {
+        String uri = userOrderBaseUrl.concat(RESET_PASSWORD_API_PATH);
+        try {
+            HttpEntity<ResetPasswordRequest> requestEntity = new HttpEntity<>(resetPasswordRequest);
+            ResponseEntity<ResetPasswordResponse> responseEntity = restTemplate.exchange(
+                    uri,
+                    HttpMethod.POST,
+                    requestEntity,
+                    ResetPasswordResponse.class);
+            if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                return responseEntity.getBody();
+            }
+        } catch (Exception e) {
+            log.error("Exception Occurred While Trying To Create Reset Password Request. Stacktrace : {}", ExceptionUtils.getStackTrace(e));
+        }
+        return new ResetPasswordResponse(false,"Forget Password Request Failed");
     }
 }

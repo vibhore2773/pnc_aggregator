@@ -1,14 +1,11 @@
 package com.pureandcold.aggregator.services.adapters;
 
 import com.pureandcold.aggregator.constants.OtpRequestFlowType;
-import com.pureandcold.aggregator.model.external.requests.ForgetPasswordRequest;
-import com.pureandcold.aggregator.model.external.requests.ResendOtpRequest;
-import com.pureandcold.aggregator.model.external.requests.UserLoginRequest;
+import com.pureandcold.aggregator.model.external.requests.*;
 import com.pureandcold.aggregator.model.external.responses.*;
 import com.pureandcold.aggregator.model.internal.responses.*;
 import org.springframework.stereotype.Component;
 
-import com.pureandcold.aggregator.model.external.requests.UserRegistrationRequest;
 import com.pureandcold.aggregator.model.internal.requests.VerifyOtpRequest;
 
 @Component
@@ -84,5 +81,19 @@ public class UserOrderServiceAdapter {
         return ForgetPasswordResponseView.builder()
                 .message(forgetPasswordResponse.getMessage())
                 .success(forgetPasswordResponse.isSuccess()).build();
+    }
+
+    public static com.pureandcold.aggregator.model.internal.requests.ResetPasswordRequest getResetPasswordRequest(ResetPasswordRequest request) {
+        return com.pureandcold.aggregator.model.internal.requests.ResetPasswordRequest.builder()
+                .username(request.getUsername())
+                .otp(request.getOtp())
+                .newPassword(request.getNewPassword())
+                .confirmNewPassword(request.getConfirmNewPassword()).build();
+    }
+
+    public static ResetPasswordResponseView getResetPasswordResponseView(ResetPasswordResponse resetPasswordResponse) {
+        return ResetPasswordResponseView.builder()
+                .message(resetPasswordResponse.getMessage())
+                .success(resetPasswordResponse.isSuccess()).build();
     }
 }

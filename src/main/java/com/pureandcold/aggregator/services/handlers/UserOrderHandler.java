@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import com.pureandcold.aggregator.model.external.requests.ForgetPasswordRequest;
 import com.pureandcold.aggregator.model.external.requests.ResendOtpRequest;
+import com.pureandcold.aggregator.model.external.requests.ResetPasswordRequest;
 import com.pureandcold.aggregator.model.external.requests.UserLoginRequest;
 import com.pureandcold.aggregator.model.external.responses.*;
 import com.pureandcold.aggregator.model.internal.responses.*;
@@ -91,6 +92,19 @@ private void validateVerifyOtpRequest(VerifyOtpRequest request) throws BadReques
     private void validateForgetPasswordRequest(ForgetPasswordRequest request) throws BadRequestException {
         if (!StringUtils.hasLength(request.getEmail()) && !StringUtils.hasLength(request.getPhoneNumber())) {
             throw new BadRequestException("Both Email & PhoneNumber Can't Be Null");
+        }
+    }
+
+    public ResetPasswordResponseView resetPassword(ResetPasswordRequest request) throws BadRequestException {
+        validateResetPasswordRequest(request);
+        ResetPasswordResponse resetPasswordResponse = userOrderService.resetPassword(UserOrderServiceAdapter.getResetPasswordRequest(request));
+        return UserOrderServiceAdapter.getResetPasswordResponseView(resetPasswordResponse);
+    }
+
+    private void validateResetPasswordRequest(ResetPasswordRequest request) throws BadRequestException {
+        if (!StringUtils.hasLength(request.getOtp()) || !StringUtils.hasLength(request.getUsername()) ||
+            !StringUtils.hasLength(request.getNewPassword()) || !StringUtils.hasLength(request.getConfirmNewPassword())) {
+            throw new BadRequestException("Invalid Reset Password Request");
         }
     }
 }
