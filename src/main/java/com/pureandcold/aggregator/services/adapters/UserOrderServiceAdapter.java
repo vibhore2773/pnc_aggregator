@@ -19,7 +19,7 @@ public class UserOrderServiceAdapter {
                 .phoneNumber(registrationRequest.getPhoneNumber())
                 .password(registrationRequest.getPassword())
                 .confirmPassword(registrationRequest.getConfirmPassword())
-                .countryCode("IN")
+                .countryCode("IN") //+91
                 .flowType(OtpRequestFlowType.SMS.name())
                 .build();
     }

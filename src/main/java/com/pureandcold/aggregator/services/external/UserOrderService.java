@@ -1,6 +1,5 @@
 package com.pureandcold.aggregator.services.external;
 
-import com.fasterxml.jackson.databind.util.ExceptionUtil;
 import com.pureandcold.aggregator.model.internal.requests.ResetPasswordRequest;
 import com.pureandcold.aggregator.model.internal.requests.ForgetPasswordRequest;
 import com.pureandcold.aggregator.model.internal.requests.ResendOtpRequest;

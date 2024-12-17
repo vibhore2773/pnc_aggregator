@@ -1,5 +1,6 @@
 package com.pureandcold.aggregator.controllers;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,11 +31,10 @@ public class HomePageDefaultController {
     public ResponseEntity<HeaderResponse> getHeader() {
         HeaderResponse response = null;
         try {
-            log.info("log 2");
             response = homePageDefaultHandler.getHeaderResponse();
+            log.info("Home page Header response : {}", response);
         } catch (Exception e) {
-            // TODO :: check why error not working
-            // log.error( "Exception Occurred while getting default header. Stack trace : {}", e.printStackTrace());
+            log.error("Exception Occurred while getting default header. Stack trace : {}", ExceptionUtils.getStackTrace(e));
             return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(response,HttpStatus.OK);
@@ -46,8 +46,7 @@ public class HomePageDefaultController {
         try {
             response = homePageDefaultHandler.getFooterResponse();
         } catch (Exception e) {
-            // TODO :: check why error not working
-            // log.error( "Exception Occurred while getting default header. Stack trace : {}", e.printStackTrace());
+            log.error("Exception Occurred while getting default footer. Stack trace : {}", ExceptionUtils.getStackTrace(e));
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(response,HttpStatus.OK);
@@ -59,8 +58,7 @@ public class HomePageDefaultController {
         try {
             response = homePageDefaultHandler.getWidgetsResponse();
         } catch (Exception e) {
-            // TODO :: check why error not working
-            // log.error( "Exception Occurred while getting default header. Stack trace : {}", e.printStackTrace());
+            log.error( "Exception Occurred while getting default widgets. Stack trace : {}", ExceptionUtils.getStackTrace(e));
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(response,HttpStatus.OK);

@@ -44,10 +44,7 @@ public class HomePageAndInfoDefaultHandler {
                 .navigationItems(Arrays.asList(
                         NavigationItem.builder().name("Home").url("/").build(),
                         NavigationItem.builder().name("About Us").url("/about").build(),
-                        NavigationItem.builder().name("Contact Us").url("/contact").build(),
-                        NavigationItem.builder().name("Profile").url("/profile").build(),
-                        NavigationItem.builder().name("Shop").url("/shop").build(),
-                        NavigationItem.builder().name("Cart").url("/cart").build()
+                        NavigationItem.builder().name("Contact Us").url("/contact").build()
                 ))
                 .build();
     }
@@ -65,7 +62,8 @@ public class HomePageAndInfoDefaultHandler {
     public WidgetsResponse getWidgetsResponse() {
         return WidgetsResponse.builder()
         .banners(List.of(
-            Banner.builder().altText("BANNER_ALT_TEXT").imageUrl("BANNER_URL").build()
+                Banner.builder().altText("banner_olive_oil").imageUrl("https://drive.google.com/file/d/16ykudXaTvFtIsVft6he08CxKy05BCqlk/view?usp=sharing").build(),
+                Banner.builder().altText("banner_all_oils").imageUrl("https://drive.google.com/file/d/1j-LA-owktdHkefL5HzpD9n00zKz3yGP-/view?usp=sharing").build()
         )).build();
     }
 
