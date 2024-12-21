@@ -58,7 +58,7 @@ public class HttpConstants {
     public static class UserOrderService {
         public static final String USER_ORDER_BASE_URL = "${user_order_base_url}";
         public static final String USER_REGISTRATION_API_PATH = "/1.0/api/user/register";
-        public static final String VERIFY_OTP_API_PATH = "/1.0/api/user/verifyOtp";
+        public static final String VERIFY_OTP_API_PATH = "/1.0/api/user/verify-otp";
         public static final String USER_LOGIN_API_PATH = "/1.0/api/user/login";
         public static final String RESEND_OTP_API_PATH = "/1.0/api/user/resend-otp";
         public static final String FORGET_PASSWORD_API_PATH = "/1.0/api/user/forget-password";
