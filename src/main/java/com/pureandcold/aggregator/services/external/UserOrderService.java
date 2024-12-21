@@ -39,6 +39,7 @@ public class UserOrderService {
 
     public UserRegistrationResponse registerUser(UserRegistrationRequest registrationRequest) {
         String uri = userOrderBaseUrl.concat(USER_REGISTRATION_API_PATH);
+        UserRegistrationResponse response = null;
         try {
             HttpEntity<UserRegistrationRequest> requestEntity = new HttpEntity<>(registrationRequest);
 
@@ -48,14 +49,16 @@ public class UserOrderService {
                     requestEntity,
                     UserRegistrationResponse.class
             );
-
+            response = responseEntity.getBody();
             if (responseEntity.getStatusCode().is2xxSuccessful()) {
-                return responseEntity.getBody();
+
+                return response;
             }
         } catch (Exception e) {
-
+            log.error("Exception occurred in registering user");
+            return new UserRegistrationResponse(false, "Registration failed");
         }
-        return new UserRegistrationResponse(false, "Registration failed"); 
+        return new UserRegistrationResponse(false, response.getMessage());
     }
 
     public VerifyOtpResponse verifyOtp(VerifyOtpRequest verifyOtpDownstreamRequest) {

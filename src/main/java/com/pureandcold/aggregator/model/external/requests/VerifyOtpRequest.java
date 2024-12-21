@@ -9,7 +9,6 @@ import lombok.Data;
 
 @Data
 @Builder
-@JsonNaming(SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VerifyOtpRequest {
     private String email;

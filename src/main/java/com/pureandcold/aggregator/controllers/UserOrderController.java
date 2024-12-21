@@ -41,7 +41,7 @@ public class UserOrderController {
         UserRegistrationResponseView response = null;
         try {
             response = userOrderHandler.getUserRegistrationResponse(request);
-        }catch (BadRequestException e) {
+        } catch (BadRequestException e) {
             return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -10,7 +10,6 @@ import lombok.Data;
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonNaming(SnakeCaseStrategy.class)
 public class UserRegistrationRequest {
     private String username;
     private String email;
