@@ -64,9 +64,10 @@ public class HomePageAndInfoDefaultHandler {
 
     public WidgetsResponse getWidgetsResponse() {
         return WidgetsResponse.builder()
-        .banners(List.of(
-            Banner.builder().altText("BANNER_ALT_TEXT").imageUrl("BANNER_URL").build()
-        )).build();
+                .banners(List.of(
+                        Banner.builder().altText("banner_olive_oil").imageUrl("https://drive.google.com/file/d/16ykudXaTvFtIsVft6he08CxKy05BCqlk/view?usp=sharing").build(),
+                        Banner.builder().altText("banner_all_oils").imageUrl("https://drive.google.com/file/d/1j-LA-owktdHkefL5HzpD9n00zKz3yGP-/view?usp=sharing").build()
+                )).build();
     }
 
     public FetchProductResponseView getProductsByType(FetchProductRequest request) {
@@ -81,7 +82,10 @@ public class HomePageAndInfoDefaultHandler {
                               .aboutUs(Info.builder()
                                               .titleText("ABOUT US")
                                               .imageUrl(pncLogoUrl)
-                                              .bodyTexts(Arrays.asList("body 1", "body 2"))
+                                              .bodyTexts(Arrays.asList("Welcome to PnC, where innovation meets excellence in the oil industry.",
+                                                      "We are committed to delivering the highest quality oil, leveraging cutting-edge technology to ensure purity, performance, and sustainability.",
+                                                      "Our mission is to set a new standard in the oil industry by prioritizing quality, transparency, and environmental responsibility.",
+                                                      "Join us as we revolutionize the way the world experiences and benefits from top-tier oil products."))
                                               .build())
                               .build();
     }
