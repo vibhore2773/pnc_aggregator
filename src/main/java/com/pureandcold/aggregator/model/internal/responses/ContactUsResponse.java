@@ -6,11 +6,11 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
 @JsonNaming(SnakeCaseStrategy.class)
-public class Banner {
-    private String imageUrl;
-    private String altText;
-    private String redirecterUrl;
+public class ContactUsResponse {
+    private List<Info> infos;
 }
