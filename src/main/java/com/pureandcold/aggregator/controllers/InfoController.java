@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.pureandcold.aggregator.annotation.RateLimit;
 
 
 @RestController
@@ -29,6 +30,7 @@ public class InfoController {
     }
 
     @GetMapping(ABOUT_US_PATH)
+    @RateLimit(authenticatedOnly = false, limit = 70, duration = 60)
     public ResponseEntity<InfoResponse> getAboutUsInfo() {
         InfoResponse response = null;
         try {
@@ -41,6 +43,7 @@ public class InfoController {
     }
 
     @GetMapping(CONTACT_US_PATH)
+    @RateLimit(authenticatedOnly = false, limit = 70, duration = 60)
     public ResponseEntity<InfoResponse> getContactUsInfo() {
         InfoResponse response = null;
         try {

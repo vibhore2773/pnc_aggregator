@@ -1,5 +1,6 @@
 package com.pureandcold.aggregator.controllers;
 
+import com.pureandcold.aggregator.annotation.RateLimit;
 import com.pureandcold.aggregator.model.external.requests.ForgetPasswordRequest;
 import com.pureandcold.aggregator.model.external.requests.ResendOtpRequest;
 import com.pureandcold.aggregator.model.external.requests.ResetPasswordRequest;
@@ -22,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import static com.pureandcold.aggregator.constants.HttpConstants.UserOrderController.*;
 
@@ -37,6 +39,7 @@ public class UserOrderController {
     }
 
     @PostMapping(USER_REGISTRATION_PATH)
+    @RateLimit(authenticatedOnly = false, limit = 60, duration = 60)
     public ResponseEntity<UserRegistrationResponseView> registerUser(@RequestBody UserRegistrationRequest request) {
         UserRegistrationResponseView response = null;
         try {
@@ -50,6 +53,7 @@ public class UserOrderController {
     }
 
     @PostMapping(VERIFY_OPT_PATH)
+    @RateLimit(authenticatedOnly = false, limit = 60, duration = 60)
     public ResponseEntity<VerifyOtpResponseView> verifyOtp(@RequestBody VerifyOtpRequest request) {
         VerifyOtpResponseView response = null;
         try {
@@ -63,6 +67,7 @@ public class UserOrderController {
     }
 
     @PostMapping(LOGIN_PATH)
+    @RateLimit(authenticatedOnly = false, limit = 60, duration = 60)
     public ResponseEntity<UserLoginResponseView> login(@RequestBody UserLoginRequest userRequest) {
         UserLoginResponseView response = null;
         try {
@@ -74,6 +79,7 @@ public class UserOrderController {
     }
 
     @PostMapping(RESEND_OTP_PATH)
+    @RateLimit(authenticatedOnly = false, limit = 60, duration = 60)
     public ResponseEntity<ResendOtpResponseView> resendOtp(@RequestBody ResendOtpRequest request) {
         ResendOtpResponseView response = null;
         try {
@@ -85,6 +91,7 @@ public class UserOrderController {
     }
 
     @PostMapping(FORGET_PASSWORD_PATH)
+    @RateLimit(authenticatedOnly = false, limit = 60, duration = 60)
     public ResponseEntity<ForgetPasswordResponseView> forgotPassword(@RequestBody ForgetPasswordRequest request) {
         ForgetPasswordResponseView response = null;
         try {
@@ -96,6 +103,7 @@ public class UserOrderController {
     }
 
     @PostMapping(RESET_PASSWORD_PATH)
+    @RateLimit(authenticatedOnly = false, limit = 60, duration = 60)
     public ResponseEntity<ResetPasswordResponseView> resetPassword(@RequestBody ResetPasswordRequest request) {
         ResetPasswordResponseView response = null;
         try {

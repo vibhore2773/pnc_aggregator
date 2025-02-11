@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.pureandcold.aggregator.annotation.RateLimit;
 
 
 @RestController
@@ -27,6 +28,7 @@ public class InventoryController {
     }
 
     @GetMapping(GET_PRODUCTS_PATH)
+    @RateLimit(authenticatedOnly = true, limit = 50, duration = 60)
     public ResponseEntity<FetchProductResponseView> getProducts(@RequestParam(name = "type", required = true) String type) {
         FetchProductRequest request = FetchProductRequest.builder().type(type).build();
         FetchProductResponseView response = null;

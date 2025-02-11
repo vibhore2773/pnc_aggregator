@@ -11,6 +11,7 @@ import com.pureandcold.aggregator.model.internal.responses.FooterResponse;
 import com.pureandcold.aggregator.model.internal.responses.HeaderResponse;
 import com.pureandcold.aggregator.model.internal.responses.WidgetsResponse;
 import com.pureandcold.aggregator.services.handlers.HomePageAndInfoDefaultHandler;
+import com.pureandcold.aggregator.annotation.RateLimit;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +28,7 @@ public class HomePageDefaultController {
     }
 
     @RequestMapping(value = DefaultController.HEADER_API_PATH, method = RequestMethod.GET)
+    @RateLimit(authenticatedOnly = false, limit = 100, duration = 60)
     public ResponseEntity<HeaderResponse> getHeader() {
         HeaderResponse response = null;
         try {
@@ -41,6 +43,7 @@ public class HomePageDefaultController {
     }
 
     @GetMapping(DefaultController.FOOTER_API_PATH)
+    @RateLimit(authenticatedOnly = false, limit = 100, duration = 60)
     public ResponseEntity<FooterResponse> getFooter() {
         FooterResponse response = null;
         try {
@@ -54,6 +57,7 @@ public class HomePageDefaultController {
     }
 
     @GetMapping(DefaultController.WIDGETS_API_PATH)
+    @RateLimit(authenticatedOnly = false, limit = 100, duration = 60)
     public ResponseEntity<WidgetsResponse> getWidgetsResponse() {
         WidgetsResponse response = null;
         try {
@@ -67,6 +71,7 @@ public class HomePageDefaultController {
     }
 
     @GetMapping(DefaultController.GET_PRODUCTS_PATH)
+    @RateLimit(authenticatedOnly = false, limit = 100, duration = 60)
     public ResponseEntity<FetchProductResponseView> getProducts(@RequestParam(name = "type", required = true) String type) {
         FetchProductRequest request = FetchProductRequest.builder().type(type).build();
         FetchProductResponseView response = null;
